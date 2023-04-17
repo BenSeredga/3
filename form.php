@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru" style="min-width:400px; overflow-x:auto;">
 <head>
+  <style>
+/* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
+    .error {
+      border: 2px solid red;
+    }
+  </style>
   <title>Forms</title>
   <!--link rel="stylesheet" href="style.css" type="text/css"-->
   <meta charset="utf-8">
@@ -18,13 +24,13 @@
         <div class="mb-3">
 
           <label for="nameinput" class="form-label">Ваше Имя</label>
-          <input name="name" class="form-control" id="nameinput" placeholder="Иванов Иван Иванович">
+          <input name="name" class="form-control" id="nameinput" placeholder="Иванов Иван Иванович" <?php if ($errors['name']) {print 'class="error"';} ?> value="<?php print $values['name']; ?>">
 
           <label for="emailinput" class="form-label">Электронная почта</label>
-          <input name="email" class="form-control" id="emailinput" placeholder="name@example.com">
+          <input name="email" class="form-control" id="emailinput" placeholder="name@example.com" <?php if ($errors['email']) {print 'class="error"';} ?> value="<?php print $values['email']; ?>">
 
           <label for="date1" class="form-label">Выберите Год</label>
-          <select name="year" class="form-control" id="date1">
+          <select name="year" class="form-control" id="date1" placeholder="выберите год" <?php if ($errors['year']) {print 'class="error"';} ?> value="<?php print $values['year']; ?>">
           <?php
           for ($i = 1923; $i <= 2023; $i++) {
           printf('<option value="%d">%d год</option>', $i, $i);
@@ -35,7 +41,7 @@
         
         <div class="container-fluid mb-4 ">
           <label for="gender" class="form-label">Пол</label>
-          <select class="form-control" name="gender" id="gender" size="2">
+          <select class="form-control" name="gender" id="gender" size="2" <?php if ($errors['gender']) {print 'class="error"';} ?> value="<?php print $values['gender']; ?>">
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
           </select>
@@ -44,21 +50,11 @@
 
         
 
-        <!--div class="container-fluid btn-group mb-4 " role="group">
-          
-
-          <input type="radio" class="btn-check" name="gender" id="sex1">
-          <label class="btn btn-outline-primary" for="sex1">Мужской</label>
-
-          <input type="radio" class="btn-check" name="gender" id="sex2" >
-          <label class="btn btn-outline-primary" for="sex2">Женский</label>
-        </div-->
-
-        <!--p class="text-center">Количество конечностей</p-->
+        
 
         <div class="container-fluid mb-4 ">
           <label for="limbs" class="form-label">Количество конечностей</label>
-          <select class="form-control" name="limbs" id="limbs" size="4">
+          <select class="form-control" name="limbs" id="limbs" size="4" <?php if ($errors['limbs']) {print 'class="error"';} ?> value="<?php print $values['limbs']; ?>">
             <option value="1">Одна</option>
             <option value="2">Две</option>
             <option value="3">Три</option>
@@ -67,25 +63,10 @@
 
         </div>
 
-        <!--div class="container-fluid btn-group mb-3" role="group">
-
-          <input type="radio" class="btn-check" name="options" id="1">
-          <label class="btn btn-outline-primary" for="option1">Одна</label>
-
-          <input type="radio" class="btn-check" name="options" id="2" >
-          <label class="btn btn-outline-primary" for="option2">Две</label>
-
-          <input type="radio" class="btn-check" name="options" id="3" >
-          <label class="btn btn-outline-primary" for="option3">Три</label>
-
-          <input type="radio" class="btn-check" name="options" id="4" >
-          <label class="btn btn-outline-primary" for="option4">Четыре</label>
-
-        </div-->
-
+        
         <div class="text-center">
           <label class="" for="superpowers" id="superpowers_label">Суперспособности</label><br>
-          <select class="form-select mb-3" name="abilities[]" multiple = "multiple" id="superpowers">
+          <select class="form-select mb-3" name="abilities[]" multiple = "multiple" id="superpowers" <?php if ($errors['abilities']) {print 'class="error"';} ?> value="<?php print $values['abilities']; ?>">
             
             <option value="1">Бессмертие</option>
             <option value="2">Прохождение сквозь стены</option>
@@ -96,11 +77,14 @@
 
         <div class="text-center mb-4">
           <label class="form-label" for="biography">Биография</label><br>
-          <textarea name="biography" class="form-control" id="biography" aria-label="With textarea" placeholder="Расскажите о себе"></textarea>
+          <textarea name="biography" class="form-control" id="biography" aria-label="With textarea" placeholder="Расскажите о себе" <?php if ($errors['biography']) {print 'class="error"';} ?> value="<?php print $values['biography']; ?>"></textarea>
         </div>
 
         <div class="text-center mb-5">
-          <input name="checkbox" type="checkbox" class="btn-check" id="confirm">
+
+          <!--input name="checkbox" type="checkbox" class="btn-check" id="confirm" <//?php if ($errors['checkbox']) {print 'class="error"';} ?> value="<//?php print $values['checkbox']; ?>"-->
+          <input name="checkbox" type="checkbox" class="btn-check" id="confirm" value="1">
+
           <label class="btn btn-outline-primary" for="confirm">Чекбокс</label>
         </div>
         <div class="text-center mb-4">
@@ -110,11 +94,19 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-  <!--script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script-->
-
-
-  <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7 /js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script-->
-
   <script src="script.js" defer></script>
+  <?php
+if (!empty($messages)) {
+  print('<div id="messages">');
+  // Выводим все сообщения.
+  foreach ($messages as $message) {
+    print($message);
+  }
+  print('</div>');
+}
+
+// Далее выводим форму отмечая элементы с ошибками классом error
+// и задавая начальные значения элементов ранее сохраненными.
+?>
 </body>
 </html>
