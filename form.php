@@ -33,26 +33,41 @@
           <select name="year" class="form-control" id="date1" placeholder="выберите год" <?php if ($errors['year']) {print 'class="error"';} ?> value="<?php print $values['year']; ?>">
           <?php
           for ($i = 1923; $i <= 2023; $i++) {
-          printf('<option value="%d">%d год</option>', $i, $i);
+            
+            if ($i == $values['year']) {
+              printf('<option selected value="%d">%d год</option>', $i, $i);
+            } 
+            
+            else {
+            printf('<option value="%d">%d год</option>', $i, $i);
+            }
           }
           ?>
           </select>
         </div>
         
-        <div class="container-fluid mb-4 ">
+        <!-- <div class="container-fluid mb-4 ">
           <label for="gender" class="form-label">Пол</label>
           <select class="form-control" name="gender" id="gender" size="2" <?php if ($errors['gender']) {print 'class="error"';} ?> value="<?php print $values['gender']; ?>">
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
           </select>
 
+        </div> -->
+
+        <div class="container-fluid btn-group mb-4 " role="group">
+          <input type="radio" class="btn-check" name="gender" id="gender_male" value="male" <?php if($values['gender'] == "male") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="gender_male">Мужской</label>
+
+          <input type="radio" class="btn-check" name="gender" id="gender_female" value="female" <?php if($values['gender'] == "female") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="gender_female">Женский</label>
         </div>
 
         
 
         
 
-        <div class="container-fluid mb-4 ">
+        <!-- <div class="container-fluid mb-4 ">
           <label for="limbs" class="form-label">Количество конечностей</label>
           <select class="form-control" name="limbs" id="limbs" size="4" <?php if ($errors['limbs']) {print 'class="error"';} ?> value="<?php print $values['limbs']; ?>">
             <option value="1">Одна</option>
@@ -61,23 +76,44 @@
             <option value="4">Четыре</option>
           </select>
 
+        </div> -->
+
+        <p class="text-center">Количество конечностей</p>
+        <div class="container-fluid btn-group mb-3" role="group">
+
+          <input type="radio" class="btn-check" name="limbs" id="option1" value="1" <?php if($values['limbs'] == "1") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="option1">Одна</label>
+
+          <input type="radio" class="btn-check" name="limbs" id="option2" value="2" <?php if($values['limbs'] == "2") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="option2">Две</label>
+
+          <input type="radio" class="btn-check" name="limbs" id="option3" value="3" <?php if($values['limbs'] == "3") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="option3">Три</label>
+
+          <input type="radio" class="btn-check" name="limbs" id="option4" value="4" <?php if($values['limbs'] == "4") {print 'checked';}?>>
+          <label class="btn btn-outline-primary" for="option4">Четыре</label>
+
         </div>
 
-        
+
+
+
+
+        <!-- <?php print_r($values['abilities']);?> -->
         <div class="text-center">
           <label class="" for="superpowers" id="superpowers_label">Суперспособности</label><br>
           <select class="form-select mb-3" name="abilities[]" multiple = "multiple" id="superpowers" <?php if ($errors['abilities']) {print 'class="error"';} ?> value="<?php print $values['abilities']; ?>">
             
-            <option value="1">Бессмертие</option>
-            <option value="2">Прохождение сквозь стены</option>
-            <option value="3">Левитация</option>
-            <option value="4">флэш бег</option>
+            <option value="1" <?php if(in_array("1", $values['abilities'])) {print('selected="selected"');} ?>>Бессмертие</option>
+            <option value="2" <?php if(in_array("2", $values['abilities'])) {print('selected="selected"');} ?>>Прохождение сквозь стены</option>
+            <option value="3" <?php if(in_array("3", $values['abilities'])) {print('selected="selected"');} ?>>Левитация</option>
+            <option value="4" <?php if(in_array("4", $values['abilities'])) {print('selected="selected"');} ?>>флэш бег</option>
           </select>
         </div>
 
         <div class="text-center mb-4">
           <label class="form-label" for="biography">Биография</label><br>
-          <textarea name="biography" class="form-control" id="biography" aria-label="With textarea" placeholder="Расскажите о себе" <?php if ($errors['biography']) {print 'class="error"';} ?> value="<?php print $values['biography']; ?>"></textarea>
+          <textarea name="biography" class="form-control <?php if ($errors['biography']) {print 'error';} ?>" id="biography" aria-label="With textarea" placeholder="Расскажите о себе" <?php if ($errors['biography']) {print 'class="error"';} ?>><?php echo htmlspecialchars($values['biography']); ?></textarea>
         </div>
 
         <div class="text-center mb-5">
